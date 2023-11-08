@@ -14,7 +14,12 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import axios from "axios";
+
+console.log(axios.isCancel("something"));
 const dataset = require("./data/sample.json");
+
+const words = require("./data/words.json");
 
 const defaultTheme = createTheme();
 
@@ -25,9 +30,21 @@ const shuffle = (array) =>
     .map((entry) => entry[1]);
 
 export default () => {
-  const [data, setData] = React.useState(shuffle(dataset));
+  const [data, setData] = React.useState(shuffle(words));
   const [answerVisible, setAnswerVisible] = React.useState(false);
   const [current, setCurrent] = React.useState(0);
+  const [dictAnswer, setDictAnswer] = React.useState("<loading>");
+
+  axios
+    .get("https://api.dictionaryapi.dev/api/v2/entries/en/" + data[current])
+    .then(function (response) {
+      // handle success
+      setDictAnswer(response.data[0].meanings[0].definitions[0].definition);
+    })
+    .catch(function (error) {
+      // handle error
+      setDictAnswer("<unknown>");
+    });
 
   const onNext = () => {
     setCurrent((current + 1) % data.length);
@@ -42,7 +59,7 @@ export default () => {
     setAnswerVisible(!answerVisible);
   };
 
-  const answer = <div>A: {answerVisible ? data[current].answer : ""}</div>;
+  const answer = <div>A: {answerVisible ? dictAnswer : ""}</div>;
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -61,7 +78,7 @@ export default () => {
               <Card variant="outlined">
                 <CardContent>
                   <Typography variant="h5" component="div">
-                    Q: {data[current].question}
+                    Q: {data[current]}
                   </Typography>
                   <Typography variant="h5" component="div">
                     {answer}
