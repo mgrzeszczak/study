@@ -41,7 +41,9 @@ export default (props) => {
           <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
             {showReverse ? "Answer" : "Question"}
           </Typography>
-          <Typography variant="body2">{content}</Typography>
+          <Typography variant="body2" sx={{ fontSize: 25 }}>
+            {content}
+          </Typography>
         </CardContent>
         <CardActions>
           <Button variant="outlined" size="small" onClick={onFlip}>
