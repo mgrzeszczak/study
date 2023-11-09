@@ -1,14 +1,10 @@
 [
   {
-    "question": "aloof",
-    "answer": "not friendly"
+    "question": "When to use transfer appliance?",
+    "answer": "When transfering data from own infrastructure, where connectivity is weak."
   },
   {
-    "question": "concerned",
-    "answer": "worried"
-  },
-  {
-    "question": "stroll",
-    "answer": "walk"
+    "question": "When to use storage transfer service?",
+    "answer": "..."
   }
 ]
